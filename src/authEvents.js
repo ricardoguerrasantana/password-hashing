@@ -3,22 +3,23 @@ function authEvents(events) {
   const m = 10 ** 9 + 7;
   const result = [];
   let hash = 0;
-  events.forEach(event => {
-    if (event[0] === 'setPassword') {
-      hash = calculateHash(event[1], p, m);
+  events.forEach(([eventType, eventValue]) => {
+    if (eventType === 'setPassword') {
+      hash = calculateHash(eventValue, p, m);
     }
-    if (event[0] === 'authorize') {
-      let authResult = 0;
-      if (event[1] == hash)
-        authResult = 1;
-      for (let i = 0; i < 127; i++) {
+    if (eventType === 'authorize') {
+      const value = parseInt(eventValue);
+      let authResult = false;
+      if (value === hash)
+        authResult = true;
+      for (let i = 0; i <= 127; i++) {
         const newHash = (hash * p + i) % m;
-        if (newHash == event[1]) {
-          authResult = 1;
+        if (newHash === value) {
+          authResult = true;
           break;
         }
       }
-      result.push(authResult);
+      result.push(authResult ? 1 : 0);
     }
   });
 
