@@ -26,6 +26,7 @@ Where:
 - $M = 10^9 + 7$ (a large prime modulus).
 
 For example, if $s = "cAr1"$:
+
 $$ h(s) = (f('c') \times 131^3 + f('A') \times 131^2 + f('r') \times 131^1 + f('1')) \mod (10^9 + 7) = 223691457 $$
 
 ### Example
